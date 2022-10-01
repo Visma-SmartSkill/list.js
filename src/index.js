@@ -52,6 +52,7 @@ module.exports = function (id, options, values) {
       self.list = getByClass(self.listContainer, self.listClass, true)
 
       self.parse = require('./parse')(self)
+      self.parseElement = require('./vss-parse')(self);
       self.templater = require('./templater')(self)
       self.search = require('./search')(self)
       self.filter = require('./filter')(self)
@@ -102,6 +103,12 @@ module.exports = function (id, options, values) {
     self.searched = false
     self.filtered = false
     self.parse(self.list)
+  }
+
+  this.addElement = function(element) {
+    if (element.parentNode === self.list) {
+      self.parseElement(element);
+    }
   }
 
   this.toJSON = function () {
