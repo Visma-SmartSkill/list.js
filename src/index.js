@@ -27,6 +27,7 @@ module.exports = function (id, options, values) {
       self.matchingItems = []
       self.searched = false
       self.filtered = false
+	  self.escapeRegexChars = true
       self.searchColumns = undefined
       self.searchDelay = 0
       self.handlers = { updated: [] }

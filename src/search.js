@@ -32,7 +32,9 @@ module.exports = function (list) {
         return;
       }
       s = list.utils.toString(s).toLowerCase()
-      s = s.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&') // Escape regular expression characters
+	  if (list.escapeRegexChars) {
+		s = s.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&') // Escape regular expression characters
+	  }
       searchString = s
       list.lastSearch = s;
     },
