@@ -1,6 +1,6 @@
 {
-  "name": "list.js",
-  "version": "2.3.1",
+  "name": "@visma-smartskill/list.js",
+  "version": "2.3.2",
   "description": "The perfect library for lists. Supports search, sort, filters and flexibility. Built to be invisible and work on existing HTML",
   "keywords": [
     "list",
@@ -16,13 +16,20 @@
     "email": "jonny.stromberg@gmail.com",
     "url": "https://javve.com"
   },
-  "homepage": "https://listjs.com",
-  "repository": "git://github.com/javve/list.js.git",
+  "homepage": "https://github.com/Visma-SmartSkill/list.js.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Visma-SmartSkill/list.js.git"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/javve/list.js/issues"
+    "url": "https://github.com/Visma-SmartSkill/list.js.git/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
+    "browserlist": "^1.0.1",
     "string-natural-compare": "^2.0.2"
   },
   "devDependencies": {
@@ -65,5 +72,6 @@
       "src/utils/*.js"
     ],
     "testURL": "http://localhost/"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
