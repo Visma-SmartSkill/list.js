@@ -34,6 +34,7 @@ module.exports = function (id, options, values) {
       self.matchingItems = []
       self.searched = false
       self.filtered = false
+      self.escapeRegexChars = false
       self.rememberLastSearch = false
       self.searchColumns = undefined
       self.searchDelay = 0
