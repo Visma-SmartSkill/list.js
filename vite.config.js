@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite'
-import terser from '@rollup/plugin-terser'
 
 export default defineConfig({
   build: {
@@ -11,16 +10,12 @@ export default defineConfig({
     },
     sourcemap: true,
     rollupOptions: {
+      external: [/^node:/, 'fs', 'path', 'string-natural-compare'],
       output: {
-        plugins: [
-          terser({
-            format: {
-              comments: /^! List.js v.*/,
-            },
-            mangle: true,
-          }),
-        ],
-      },
+          globals: {
+            'string-natural-compare': 'naturalSort',
+          },
+      }
     },
   },
 })
