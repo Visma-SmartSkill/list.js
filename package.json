@@ -17,10 +17,13 @@
     "url": "https://javve.com"
   },
   "homepage": "https://listjs.com",
-  "repository": "git://github.com/javve/list.js.git",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Visma-SmartSkill/list.js.git"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/javve/list.js/issues"
+    "url": "https://github.com/Visma-SmartSkill/list.js/issues"
   },
   "dependencies": {
     "string-natural-compare": "^2.0.3"
