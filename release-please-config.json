@@ -1,0 +1,11 @@
+{
+  "bootstrap-sha": "d32c85d396c961e079ecf5c21ebffe53a9a73d80",
+  "packages": {
+    ".": {
+      "package-name": "list.js",
+      "release-type": "node",
+      "tag-separator": "@",
+      "include-component-in-tag": true
+    }
+  }
+}
