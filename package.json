@@ -17,16 +17,20 @@
     "url": "https://javve.com"
   },
   "homepage": "https://listjs.com",
-  "repository": "git://github.com/javve/list.js.git",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/Visma-SmartSkill/list.js.git"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/javve/list.js/issues"
+    "url": "https://github.com/Visma-SmartSkill/list.js/issues"
   },
   "dependencies": {
     "string-natural-compare": "^2.0.3"
   },
   "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-terser": "^1.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/user-event": "^14.6.1",
     "@vitest/coverage-v8": "^3.1.2",
