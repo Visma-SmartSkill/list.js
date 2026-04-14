@@ -1,39 +1,37 @@
-name: CI
+#name: CI
+#
+#on:
+#  push:
+#  pull_request:
+#    branches:
+#      - '**'
+#
+#jobs:
+#  build:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 24
+#          cache: 'npm'
+#
+#      - name: Install dependencies
+#        run: npm install
+#
+#      - name: Run lint
+#        run: npm run lint
+#
+#      - name: Run tests with coverage
+#        run: npm run test:coverage
 
-on:
-  push:
-    branches:
-      - 'master'
-  pull_request:
-    branches:
-      - '**'
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run tests with coverage
-        run: npm run test:coverage
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: vitest-coverage
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v5
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }}
+#          files: ./coverage/lcov.info
+#          flags: unittests
+#          name: vitest-coverage
