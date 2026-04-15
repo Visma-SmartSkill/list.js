@@ -27,9 +27,16 @@ module.exports = function (list) {
       }
     },
     setSearchString: function (s) {
+      if (list.rememberLastSearch && s === undefined && list.lastSearch) {
+        searchString = list.lastSearch
+        return;
+      }
       s = list.utils.toString(s).toLowerCase()
-      s = s.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&') // Escape regular expression characters
+      if (list.escapeRegexChars) {
+        s = s.replace(/[-[\]{}()*+?.,\\^$|#]/g, '\\$&') // Escape regular expression characters
+      }
       searchString = s
+      list.lastSearch = s;
     },
     toArray: function (values) {
       var tmpColumn = []

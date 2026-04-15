@@ -10,7 +10,8 @@ var naturalSort = require('string-natural-compare'),
   templater = require('./templater'),
   Item = require('./item'),
   sort = require('./sort'),
-  sortButtons = require('./sort-buttons')
+  sortButtons = require('./sort-buttons'),
+  vssParse = require('./vss-parse')
 
 var addSortListeners = sortButtons.addSortListeners
 var clearSortOrder = sortButtons.clearSortOrder
@@ -34,6 +35,8 @@ module.exports = function (id, options, values) {
       self.matchingItems = []
       self.searched = false
       self.filtered = false
+      self.escapeRegexChars = true
+      self.rememberLastSearch = false
       self.searchColumns = undefined
       self.searchDelay = 0
       self.handlers = { updated: [] }
@@ -60,6 +63,7 @@ module.exports = function (id, options, values) {
 
       self.parse = require('./parse')(self)
       self.templater = templater
+      self.parseElement = vssParse
       self.template = self.templater.getTemplate({
         parentEl: self.list,
         valueNames: self.valueNames,
@@ -154,6 +158,12 @@ module.exports = function (id, options, values) {
     self.searched = false
     self.filtered = false
     self.parse(self.list)
+  }
+
+  this.addElement = function(element) {
+    if (element.parentNode === self.list) {
+      self.parseElement(element);
+    }
   }
 
   this.toJSON = function () {

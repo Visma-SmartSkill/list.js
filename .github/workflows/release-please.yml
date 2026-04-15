@@ -1,0 +1,71 @@
+name: "release-please"
+
+on:
+  push:
+    branches:
+    - testmain
+  pull_request:
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    env:
+      BRANCH: testmain
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-branch: ${{ env.BRANCH }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Create REPO_OWNER and REPO_NAME lowercased env vars
+        run: |
+          echo "REPO_OWNER=$(echo ${GITHUB_REPOSITORY%/*} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+          echo "REPO_NAME=$(echo ${GITHUB_REPOSITORY#*/} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: 'https://npm.pkg.github.com'
+          scope: ${{ env.REPO_OWNER }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: cat $NPM_CONFIG_USERCONFIG
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to GitHub Packages
+        run: |
+          sed -i "s+\"name\": \"$REPO_NAME\"+\"name\": \"@$REPO_OWNER/$REPO_NAME\"+gI" ./package.json
+          cat ./package.json
+          npm config list
+          npm -ddd publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
