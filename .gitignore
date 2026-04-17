@@ -1,7 +1,5 @@
 .DS_Store
 node_modules
-docs/_site
-docs/.sass-cache
-docs/.jekyll-metadata
+dist/
 coverage
-docs/vendor
+.idea/
