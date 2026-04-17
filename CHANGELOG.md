@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.4.0](https://github.com/Visma-SmartSkill/list.js/compare/list.js@v2.3.2...list.js@v2.4.0) (2026-04-17)
+
+
+### Features
+
+* allow adding element instances without parsing ([894eab7](https://github.com/Visma-SmartSkill/list.js/commit/894eab770a3089d5b7ac41a39051e03c8a54c0e3))
+* make escaping regex chars optional ([293f6ac](https://github.com/Visma-SmartSkill/list.js/commit/293f6acd0eb8ae6779d3175a535aa7bcb300e079))
+* optionally remember the last search term ([1e139ef](https://github.com/Visma-SmartSkill/list.js/commit/1e139efefb46f97ed89d614ed4fb89c6ddbfa53f))
+
+
+### Bug Fixes
+
+* clean up mixed CJS/ESM and inconsisten exports ([34e297f](https://github.com/Visma-SmartSkill/list.js/commit/34e297faaf4631de5cae57e314b462830f24b9cd))
+
 ### 2.3.1 - 2021-01-17
 
 - - **[Improvement]** #708 Support restored for Node 6, 8, 10 and 12.
