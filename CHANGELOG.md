@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.4.1](https://github.com/Visma-SmartSkill/list.js/compare/list.js@v2.4.0...list.js@v2.4.1) (2026-04-17)
+
+
+### Bug Fixes
+
+* clean up mixed CJS/ESM and inconsisten exports ([9ca04a7](https://github.com/Visma-SmartSkill/list.js/commit/9ca04a71a910530d475f04e176680e82ab93e0f3))
+* clean up mixed CJS/ESM and inconsisten exports ([#42](https://github.com/Visma-SmartSkill/list.js/issues/42)) ([feda292](https://github.com/Visma-SmartSkill/list.js/commit/feda29272c78330f3d5d17a0e165bc179c12cc71))
+
 ## [2.4.0](https://github.com/Visma-SmartSkill/list.js/compare/list.js@v2.3.2...list.js@v2.4.0) (2026-04-17)
 
 
