@@ -8,7 +8,7 @@ import { default as index } from './index-of'
  * Whitespace regexp.
  */
 
-var re = /\s+/
+let re = /\s+/
 
 /**
  * Wrap `el` in a `ClassList`.
@@ -53,8 +53,8 @@ ClassList.prototype.add = function (name) {
   }
 
   // fallback
-  var arr = this.array()
-  var i = index(arr, name)
+  let arr = this.array()
+  let i = index(arr, name)
   if (!~i) arr.push(name)
   this.el.className = arr.join(' ')
   return this
@@ -78,8 +78,8 @@ ClassList.prototype.remove = function (name) {
   }
 
   // fallback
-  var arr = this.array()
-  var i = index(arr, name)
+  let arr = this.array()
+  let i = index(arr, name)
   if (~i) arr.splice(i, 1)
   this.el.className = arr.join(' ')
   return this
@@ -136,9 +136,9 @@ ClassList.prototype.toggle = function (name, force) {
  */
 
 ClassList.prototype.array = function () {
-  var className = this.el.getAttribute('class') || ''
-  var str = className.replace(/^\s+|\s+$/g, '')
-  var arr = str.split(re)
+  let className = this.el.getAttribute('class') || ''
+  let str = className.replace(/^\s+|\s+$/g, '')
+  let arr = str.split(re)
   if ('' === arr[0]) arr.shift()
   return arr
 }
