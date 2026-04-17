@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
-import List from '../../src/index'
+import { default as List } from '../../src/index'
 
 describe('Button', function () {
   var list

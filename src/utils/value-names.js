@@ -1,4 +1,4 @@
-var getByClass = require('./get-by-class')
+import { default as getByClass } from './get-by-class'
 
 var getDefinitionFromName = function (name, valueNames) {
   for (var i = 0, il = valueNames.length; i < il; i++) {
@@ -36,4 +36,4 @@ var set = function (el, name, value, valueNames) {
   }
 }
 
-module.exports = { getDefinitionFromName: getDefinitionFromName, set: set }
+export default { getDefinitionFromName: getDefinitionFromName, set: set }

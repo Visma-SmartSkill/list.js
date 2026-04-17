@@ -1,4 +1,4 @@
-module.exports = function (s) {
+export default function (s) {
   s = s === undefined ? '' : s
   s = s === null ? '' : s
   s = s.toString()

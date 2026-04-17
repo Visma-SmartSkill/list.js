@@ -1,9 +1,9 @@
-var getAttribute = require('./utils/get-attribute')
-var classes = require('./utils/classes')
-var events = require('./utils/events')
-var sorter = require('./sort')
+import { default as getAttribute } from './utils/get-attribute'
+import { default as classes } from './utils/classes'
+import { events } from './utils/events'
+import { default as sorter } from './sort'
 
-var getInSensitive = function (btn) {
+export function getInSensitive (btn) {
   var insensitive = getAttribute(btn, 'data-insensitive')
   if (insensitive === 'false') {
     return false
@@ -11,7 +11,7 @@ var getInSensitive = function (btn) {
     return true
   }
 }
-var getNextSortOrder = function (btn) {
+export function getNextSortOrder(btn) {
   var predefinedOrder = getAttribute(btn, 'data-order')
   if (predefinedOrder == 'asc' || predefinedOrder == 'desc') {
     return predefinedOrder
@@ -23,13 +23,13 @@ var getNextSortOrder = function (btn) {
     return 'asc'
   }
 }
-var clearSortOrder = function (els) {
+export function clearSortOrder(els) {
   for (var i = 0, il = els.length; i < il; i++) {
     classes(els[i]).remove('asc')
     classes(els[i]).remove('desc')
   }
 }
-var setSortOrder = function (els, valueName, order) {
+export function setSortOrder(els, valueName, order) {
   for (var i = 0, il = els.length; i < il; i++) {
     var btn = els[i]
     if (getAttribute(btn, 'data-sort') !== valueName) {
@@ -53,7 +53,7 @@ var setSortOrder = function (els, valueName, order) {
   }
 }
 
-var addSortListeners = function (elements, options) {
+export function addSortListeners(elements, options) {
   options = options || {}
   var items = options.items
   var sortFunction = options.sortFunction
@@ -78,7 +78,7 @@ var addSortListeners = function (elements, options) {
   })
 }
 
-module.exports = {
+export default {
   addSortListeners: addSortListeners,
   getInSensitive: getInSensitive,
   getNextSortOrder: getNextSortOrder,
