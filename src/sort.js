@@ -1,13 +1,13 @@
-var naturalSort = require('string-natural-compare')
+import { default as naturalSort } from 'string-natural-compare'
 
-module.exports = function (items, column, options) {
+export default function (items, column, options) {
   options = options || {}
-  var sortFunction = options.sortFunction || undefined
-  var order = options.order || 'asc'
-  var alphabet = options.alphabet || undefined
-  var insensitive = options.insensitive !== undefined ? options.insensitive : true
-  var caseSensitive = insensitive === false
-  var multi = order === 'desc' ? -1 : 1
+  let sortFunction = options.sortFunction || undefined
+  let order = options.order || 'asc'
+  let alphabet = options.alphabet || undefined
+  let insensitive = options.insensitive !== undefined ? options.insensitive : true
+  let caseSensitive = insensitive === false
+  let multi = order === 'desc' ? -1 : 1
 
   if (sortFunction) {
     return items.sort(function (itemA, itemB) {
@@ -22,7 +22,7 @@ module.exports = function (items, column, options) {
   } else {
     naturalSort.alphabet = alphabet
     items.sort(function (itemA, itemB) {
-      var sortFunction = naturalSort.caseInsensitive
+      let sortFunction = naturalSort.caseInsensitive
       if (!alphabet) {
         if (caseSensitive !== false) {
           sortFunction = naturalSort

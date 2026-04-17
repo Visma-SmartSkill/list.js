@@ -1,11 +1,11 @@
-var getByClass = require('./get-by-class')
+import { default as getByClass } from './get-by-class'
 
-var getDefinitionFromName = function (name, valueNames) {
-  for (var i = 0, il = valueNames.length; i < il; i++) {
-    var valueName = valueNames[i]
+let getDefinitionFromName = function (name, valueNames) {
+  for (let i = 0, il = valueNames.length; i < il; i++) {
+    let valueName = valueNames[i]
     if (valueName.data) {
-      var data = valueName.data
-      for (var j = 0, jl = data.length; j < jl; j++) {
+      let data = valueName.data
+      for (let j = 0, jl = data.length; j < jl; j++) {
         if (data[j] === name) {
           return { data: name }
         }
@@ -17,8 +17,8 @@ var getDefinitionFromName = function (name, valueNames) {
     }
   }
 }
-var set = function (el, name, value, valueNames) {
-  var elm = undefined,
+let set = function (el, name, value, valueNames) {
+  let elm = undefined,
     valueName = getDefinitionFromName(name, valueNames)
   if (!valueName) return
   if (valueName.data) {
@@ -36,4 +36,4 @@ var set = function (el, name, value, valueNames) {
   }
 }
 
-module.exports = { getDefinitionFromName: getDefinitionFromName, set: set }
+export default { getDefinitionFromName: getDefinitionFromName, set: set }

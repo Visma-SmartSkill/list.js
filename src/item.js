@@ -1,17 +1,17 @@
-var templater = require('./templater')
+import { default as templater } from './templater'
 
-module.exports = function (initValues, options) {
-  var item = this
+export default function (initValues, options) {
+  let item = this
 
   this._values = {}
 
   this.found = false
   this.filtered = false
 
-  var init = function (values, options) {
+  let init = function (values, options) {
     options = options || {}
-    var element = options.element
-    var template = options.template
+    let element = options.element
+    let template = options.template
     if (element) item.elm = element
     if (!template) throw new Error('missing_item_template')
     item.template = template
@@ -20,7 +20,7 @@ module.exports = function (initValues, options) {
 
   this.values = function (newValues) {
     if (newValues !== undefined) {
-      for (var name in newValues) {
+      for (let name in newValues) {
         item._values[name] = newValues[name]
       }
       if (item.elm) {
@@ -32,8 +32,8 @@ module.exports = function (initValues, options) {
   }
 
   this.matching = function (options) {
-    var searched = options.searched
-    var filtered = options.filtered
+    let searched = options.searched
+    let filtered = options.filtered
     return (
       (filtered && searched && item.found && item.filtered) ||
       (filtered && !searched && item.filtered) ||

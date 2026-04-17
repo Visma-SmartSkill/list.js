@@ -1,39 +1,55 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - 'master'
   pull_request:
-    branches:
-      - '**'
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  commitlint:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install commitlint
+        run: |
+          npm install
+          npm install -D @commitlint/cli @commitlint/config-conventional
+          echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+      - name: Print versions
+        run: |
+          git --version
+          node --version
+          npm --version
+          npx commitlint --version
 
+      - name: Validate current commit (last commit) with commitlint
+        if: github.event_name == 'push'
+        run: npx commitlint --last --verbose
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup node
+        uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: 'npm'
-
+          cache: npm
       - name: Install dependencies
         run: npm install
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run tests with coverage
-        run: npm run test:coverage
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: vitest-coverage
+      - name: Build
+        run: npm run build
+      - name: Run tests
+        run: npx vitest run

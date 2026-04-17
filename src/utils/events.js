@@ -1,19 +1,19 @@
+import { default as toArray } from './to-array'
+
 var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
   unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
-  prefix = bind !== 'addEventListener' ? 'on' : '',
-  toArray = require('./to-array')
+  prefix = bind !== 'addEventListener' ? 'on' : ''
 
 /**
  * Bind `el` event `type` to `fn`.
  *
- * @param {Element} el, NodeList, HTMLCollection or Array
+ * @param {Element} el Element, NodeList, HTMLCollection or Array
  * @param {String} type
  * @param {Function} fn
  * @param {Boolean} capture
  * @api public
  */
-
-exports.bind = function (el, type, fn, capture) {
+let bindFn = function (el, type, fn, capture) {
   el = toArray(el)
   for (var i = 0, il = el.length; i < il; i++) {
     el[i][bind](prefix + type, fn, capture || false)
@@ -23,14 +23,14 @@ exports.bind = function (el, type, fn, capture) {
 /**
  * Unbind `el` event `type`'s callback `fn`.
  *
- * @param {Element} el, NodeList, HTMLCollection or Array
+ * @param {Element} el Element, NodeList, HTMLCollection or Array
  * @param {String} type
  * @param {Function} fn
  * @param {Boolean} capture
  * @api public
  */
 
-exports.unbind = function (el, type, fn, capture) {
+let unbindFn = function (el, type, fn, capture) {
   el = toArray(el)
   for (var i = 0, il = el.length; i < il; i++) {
     el[i][unbind](prefix + type, fn, capture || false)
@@ -49,7 +49,7 @@ exports.unbind = function (el, type, fn, capture) {
  * @api public
  */
 
-exports.debounce = function (fn, wait, immediate) {
+let debounceFn = function (fn, wait, immediate) {
   var timeout
   return wait
     ? function () {
@@ -66,3 +66,5 @@ exports.debounce = function (fn, wait, immediate) {
       }
     : fn
 }
+
+export const events = { bind: bindFn, unbind: unbindFn, debounce: debounceFn }

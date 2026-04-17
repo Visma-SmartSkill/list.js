@@ -1,15 +1,15 @@
-var getByClass = require('./utils/get-by-class')
-var getAttribute = require('./utils/get-attribute')
-var valueNamesUtils = require('./utils/value-names')
+import { default as getByClass } from './utils/get-by-class'
+import { default as getAttribute } from './utils/get-attribute'
+import { default as valueNamesUtils } from './utils/value-names'
 
-var createCleanTemplateItem = function (templateNode, valueNames) {
-  var el = templateNode.cloneNode(true)
+let createCleanTemplateItem = function (templateNode, valueNames) {
+  let el = templateNode.cloneNode(true)
   el.removeAttribute('id')
-  for (var i = 0, il = valueNames.length; i < il; i++) {
-    var elm = undefined,
+  for (let i = 0, il = valueNames.length; i < il; i++) {
+    let elm = undefined,
       valueName = valueNames[i]
     if (valueName.data) {
-      for (var j = 0, jl = valueName.data.length; j < jl; j++) {
+      for (let j = 0, jl = valueName.data.length; j < jl; j++) {
         el.setAttribute('data-' + valueName.data[j], '')
       }
     } else if (valueName.attr && valueName.name) {
@@ -27,40 +27,40 @@ var createCleanTemplateItem = function (templateNode, valueNames) {
   return el
 }
 
-var stringToDOMElement = function (itemHTML) {
+let stringToDOMElement = function (itemHTML) {
   if (typeof itemHTML !== 'string') return undefined
   if (/<tr[\s>]/g.exec(itemHTML)) {
-    var tbody = document.createElement('tbody')
+    let tbody = document.createElement('tbody')
     tbody.innerHTML = itemHTML
     return tbody.firstElementChild
   } else if (itemHTML.indexOf('<') !== -1) {
-    var div = document.createElement('div')
+    let div = document.createElement('div')
     div.innerHTML = itemHTML
     return div.firstElementChild
   }
   return undefined
 }
 
-var templater = {}
+let templater = {}
 
 templater.getTemplate = function (options) {
   options = options || {}
-  var valueNames = options.valueNames
-  var parentEl = options.parentEl
-  var template = options.template
+  let valueNames = options.valueNames
+  let parentEl = options.parentEl
+  let template = options.template
 
   if (typeof template === 'function') {
     return {
       valueNames: valueNames,
       type: 'dynamic',
       render: function (values) {
-        var item = template(values)
+        let item = template(values)
         return stringToDOMElement(item)
       },
     }
   }
 
-  var itemSource
+  let itemSource
   if (typeof template === 'string') {
     if (template.indexOf('<') === -1) {
       itemSource = document.getElementById(template)
@@ -68,8 +68,8 @@ templater.getTemplate = function (options) {
       itemSource = stringToDOMElement(template)
     }
   } else {
-    var nodes = parentEl.childNodes
-    for (var i = 0, il = nodes.length; i < il; i++) {
+    let nodes = parentEl.childNodes
+    for (let i = 0, il = nodes.length; i < il; i++) {
       // Only textnodes have a data attribute
       if (nodes[i].data === undefined) {
         itemSource = nodes[i].cloneNode(true)
@@ -85,7 +85,7 @@ templater.getTemplate = function (options) {
   return {
     valueNames: valueNames,
     render: function (values) {
-      var el = itemSource.cloneNode(true)
+      let el = itemSource.cloneNode(true)
       templater.set(el, values, valueNames)
       return el
     },
@@ -93,12 +93,12 @@ templater.getTemplate = function (options) {
 }
 
 templater.get = function (el, valueNames) {
-  var values = {}
-  var elm
-  for (var i = 0, il = valueNames.length; i < il; i++) {
-    var valueName = valueNames[i]
+  let values = {}
+  let elm
+  for (let i = 0, il = valueNames.length; i < il; i++) {
+    let valueName = valueNames[i]
     if (valueName.data) {
-      for (var j = 0, jl = valueName.data.length; j < jl; j++) {
+      for (let j = 0, jl = valueName.data.length; j < jl; j++) {
         values[valueName.data[j]] = getAttribute(el, 'data-' + valueName.data[j])
       }
     } else if (valueName.attr && valueName.name) {
@@ -113,7 +113,7 @@ templater.get = function (el, valueNames) {
 }
 
 templater.set = function (el, values, valueNames) {
-  for (var v in values) {
+  for (let v in values) {
     if (values[v]) {
       valueNamesUtils.set(el, v, values[v], valueNames)
     }
@@ -140,4 +140,4 @@ templater.clear = function (parentEl) {
   }
 }
 
-module.exports = templater
+export default templater
