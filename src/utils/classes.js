@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var index = require('./index-of')
+import { default as index } from './index-of'
 
 /**
  * Whitespace regexp.
@@ -18,7 +18,7 @@ var re = /\s+/
  * @api public
  */
 
-module.exports = function (el) {
+export default function (el) {
   return new ClassList(el)
 }
 

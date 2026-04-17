@@ -1,6 +1,6 @@
-var templater = require('./templater')
+import { default as templater } from './templater'
 
-module.exports = function (initValues, options) {
+export default function (initValues, options) {
   var item = this
 
   this._values = {}

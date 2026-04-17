@@ -1,10 +1,10 @@
-var events = require('./utils/events'),
-  extend = require('./utils/extend'),
-  toString = require('./utils/to-string'),
-  getByClass = require('./utils/get-by-class'),
-  fuzzy = require('./utils/fuzzy')
+import { events } from './utils/events'
+import { default as getByClass } from './utils/get-by-class'
+import { default as fuzzy } from './utils/fuzzy'
+import { default as extend } from './utils/extend'
+import { default as toString } from './utils/to-string'
 
-module.exports = function (list, options) {
+export default function (list, options) {
   options = options || {}
 
   options = extend(

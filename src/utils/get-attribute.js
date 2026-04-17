@@ -9,7 +9,7 @@
  * @api public
  */
 
-module.exports = function (el, attr) {
+export default function (el, attr) {
   var result = (el.getAttribute && el.getAttribute(attr)) || null
   if (!result) {
     var attrs = el.attributes

@@ -1,6 +1,6 @@
-var getByClass = require('./utils/get-by-class')
-var getAttribute = require('./utils/get-attribute')
-var valueNamesUtils = require('./utils/value-names')
+import { default as getByClass } from './utils/get-by-class'
+import { default as getAttribute } from './utils/get-attribute'
+import { default as valueNamesUtils } from './utils/value-names'
 
 var createCleanTemplateItem = function (templateNode, valueNames) {
   var el = templateNode.cloneNode(true)
@@ -140,4 +140,4 @@ templater.clear = function (parentEl) {
   }
 }
 
-module.exports = templater
+export default templater
