@@ -19,12 +19,12 @@ import { default as fuzzySearch } from './fuzzy-search'
 import { default as addAsyncFn } from './add-async'
 import { default as initPaginationFn } from './pagination'
 
-var addSortListeners = sortButtons.addSortListeners
-var clearSortOrder = sortButtons.clearSortOrder
-var setSortOrder = sortButtons.setSortOrder
+let addSortListeners = sortButtons.addSortListeners
+let clearSortOrder = sortButtons.clearSortOrder
+let setSortOrder = sortButtons.setSortOrder
 
 export default function (id, options, values) {
-  var self = this,
+  let self = this,
     init,
     addAsync = addAsyncFn(self),
     initPagination = initPaginationFn(self)
@@ -87,7 +87,7 @@ export default function (id, options, values) {
       self.update()
     },
     handlers: function () {
-      for (var handler in self.handlers) {
+      for (let handler in self.handlers) {
         if (self[handler] && self.handlers[handler]) {
           self.on(handler, self[handler])
         }
@@ -107,20 +107,20 @@ export default function (id, options, values) {
         if (options.pagination[0] === undefined) {
           options.pagination = [options.pagination]
         }
-        for (var i = 0, il = options.pagination.length; i < il; i++) {
+        for (let i = 0, il = options.pagination.length; i < il; i++) {
           initPagination(options.pagination[i])
         }
       }
     },
     sort: function () {
-      var sortButtons = self.utils.getByClass(self.listContainer, self.sortClass)
-      var items = self.items
-      var sortFunction = self.sortFunction
-      var alphabet = self.alphabet
-      var before = function () {
+      let sortButtons = self.utils.getByClass(self.listContainer, self.sortClass)
+      let items = self.items
+      let sortFunction = self.sortFunction
+      let alphabet = self.alphabet
+      let before = function () {
         self.trigger('sortStart')
       }
-      var after = function () {
+      let after = function () {
         self.update()
         self.trigger('sortComplete')
       }
@@ -173,8 +173,8 @@ export default function (id, options, values) {
   }
 
   this.toJSON = function () {
-    var json = []
-    for (var i = 0, il = self.items.length; i < il; i++) {
+    let json = []
+    for (let i = 0, il = self.items.length; i < il; i++) {
       json.push(self.items[i].values())
     }
     return json
@@ -191,12 +191,12 @@ export default function (id, options, values) {
       addAsync(values.slice(0), callback)
       return
     }
-    var added = []
+    let added = []
     if (values[0] === undefined) {
       values = [values]
     }
-    for (var i = 0, il = values.length; i < il; i++) {
-      var item = new Item(values[i], { template: self.template })
+    for (let i = 0, il = values.length; i < il; i++) {
+      let item = new Item(values[i], { template: self.template })
       self.items.push(item)
       added.push(item)
     }
@@ -216,9 +216,9 @@ export default function (id, options, values) {
    * property "valuename" === value
    */
   this.remove = function (valueName, value) {
-    var found = 0
-    for (var i = 0, il = self.items.length; i < il; i++) {
-      if (self.items[i].values()[valueName] == value) {
+    let found = 0
+    for (let i = 0, il = self.items.length; i < il; i++) {
+      if (self.items[i].values()[valueName] === value) {
         self.templater.remove(self.items[i].elm, self.list)
         self.items.splice(i, 1)
         il--
@@ -234,10 +234,10 @@ export default function (id, options, values) {
    * property "valueName" === value
    */
   this.get = function (valueName, value) {
-    var matchedItems = []
-    for (var i = 0, il = self.items.length; i < il; i++) {
-      var item = self.items[i]
-      if (item.values()[valueName] == value) {
+    let matchedItems = []
+    for (let i = 0, il = self.items.length; i < il; i++) {
+      let item = self.items[i]
+      if (item.values()[valueName] === value) {
         matchedItems.push(item)
       }
     }
@@ -266,8 +266,8 @@ export default function (id, options, values) {
   }
 
   this.off = function (event, callback) {
-    var e = self.handlers[event]
-    var index = indexOf(e, callback)
+    let e = self.handlers[event]
+    let index = indexOf(e, callback)
     if (index > -1) {
       e.splice(index, 1)
     }
@@ -275,7 +275,7 @@ export default function (id, options, values) {
   }
 
   this.trigger = function (event) {
-    var i = self.handlers[event].length
+    let i = self.handlers[event].length
     while (i--) {
       self.handlers[event][i](self)
     }
@@ -284,7 +284,7 @@ export default function (id, options, values) {
 
   this.reset = {
     filter: function () {
-      var is = self.items,
+      let is = self.items,
         il = is.length
       while (il--) {
         is[il].filtered = false
@@ -292,7 +292,7 @@ export default function (id, options, values) {
       return self
     },
     search: function () {
-      var is = self.items,
+      let is = self.items,
         il = is.length
       while (il--) {
         is[il].found = false
@@ -302,13 +302,13 @@ export default function (id, options, values) {
   }
 
   this.update = function () {
-    var is = self.items,
+    let is = self.items,
       il = is.length
 
     self.visibleItems = []
     self.matchingItems = []
     self.templater.clear(self.list)
-    for (var i = 0; i < il; i++) {
+    for (let i = 0; i < il; i++) {
       if (is[i].matching(self) && self.matchingItems.length + 1 >= self.i && self.visibleItems.length < self.page) {
         if (!is[i].elm) {
           is[i].elm = templater.create(is[i].values(), self.template)

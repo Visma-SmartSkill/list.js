@@ -7,13 +7,12 @@ var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
 /**
  * Bind `el` event `type` to `fn`.
  *
- * @param {Element} el, NodeList, HTMLCollection or Array
+ * @param {Element} el Element, NodeList, HTMLCollection or Array
  * @param {String} type
  * @param {Function} fn
  * @param {Boolean} capture
  * @api public
  */
-
 let bindFn = function (el, type, fn, capture) {
   el = toArray(el)
   for (var i = 0, il = el.length; i < il; i++) {
@@ -24,7 +23,7 @@ let bindFn = function (el, type, fn, capture) {
 /**
  * Unbind `el` event `type`'s callback `fn`.
  *
- * @param {Element} el, NodeList, HTMLCollection or Array
+ * @param {Element} el Element, NodeList, HTMLCollection or Array
  * @param {String} type
  * @param {Function} fn
  * @param {Boolean} capture

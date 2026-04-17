@@ -1,19 +1,19 @@
 export default function (list) {
-  var columns, searchString, customSearch
+  let columns, searchString, customSearch
 
-  var prepare = {
+  let prepare = {
     resetList: function () {
       list.i = 1
       list.templater.clear(list.list)
       customSearch = undefined
     },
     setOptions: function (args) {
-      if (args.length == 2 && args[1] instanceof Array) {
+      if (args.length === 2 && args[1] instanceof Array) {
         columns = args[1]
-      } else if (args.length == 2 && typeof args[1] == 'function') {
+      } else if (args.length === 2 && typeof args[1] == 'function') {
         columns = undefined
         customSearch = args[1]
-      } else if (args.length == 3) {
+      } else if (args.length === 3) {
         columns = args[1]
         customSearch = args[2]
       } else {
@@ -39,18 +39,19 @@ export default function (list) {
       list.lastSearch = s;
     },
     toArray: function (values) {
-      var tmpColumn = []
-      for (var name in values) {
+      let tmpColumn = []
+      for (let name in values) {
         tmpColumn.push(name)
       }
       return tmpColumn
     },
   }
-  var search = {
+  let search = {
     list: function () {
       // Extract quoted phrases "word1 word2" from original searchString
       // searchString is converted to lowercase by List.js
-      var words = [],
+      let words = [],
+        word_found,
         phrase,
         ss = searchString
       while ((phrase = ss.match(/"([^"]+)"/)) !== null) {
@@ -60,17 +61,17 @@ export default function (list) {
       // Get remaining space-separated words (if any)
       ss = ss.trim()
       if (ss.length) words = words.concat(ss.split(/\s+/))
-      for (var k = 0, kl = list.items.length; k < kl; k++) {
-        var item = list.items[k]
+      for (let k = 0, kl = list.items.length; k < kl; k++) {
+        let item = list.items[k]
         item.found = false
         if (!words.length) continue
-        for (var i = 0, il = words.length; i < il; i++) {
-          var word_found = false
-          for (var j = 0, jl = columns.length; j < jl; j++) {
-            var values = item.values(),
+        for (let i = 0, il = words.length; i < il; i++) {
+          word_found = false
+          for (let j = 0, jl = columns.length; j < jl; j++) {
+            let values = item.values(),
               column = columns[j]
             if (values[column] && values[column] !== undefined && values[column] !== null) {
-              var text = typeof values[column] !== 'string' ? values[column].toString() : values[column]
+              let text = typeof values[column] !== 'string' ? values[column].toString() : values[column]
               if (text.toLowerCase().indexOf(words[i]) !== -1) {
                 // word found, so no need to check it against any other columns
                 word_found = true
@@ -91,7 +92,7 @@ export default function (list) {
     },
   }
 
-  var searchMethod = function (str) {
+  let searchMethod = function (str) {
     list.trigger('searchStart')
 
     prepare.resetList()
@@ -122,7 +123,7 @@ export default function (list) {
     list.utils.getByClass(list.listContainer, list.searchClass),
     'keyup',
     list.utils.events.debounce(function (e) {
-      var target = e.target || e.srcElement, // IE have srcElement
+      let target = e.target || e.srcElement, // IE have srcElement
         alreadyCleared = target.value === '' && !list.searched
       if (!alreadyCleared) {
         // If oninput already have resetted the list, do nothing
@@ -133,7 +134,7 @@ export default function (list) {
 
   // Used to detect click on HTML5 clear button
   list.utils.events.bind(list.utils.getByClass(list.listContainer, list.searchClass), 'input', function (e) {
-    var target = e.target || e.srcElement
+    let target = e.target || e.srcElement
     if (target.value === '') {
       searchMethod('')
     }

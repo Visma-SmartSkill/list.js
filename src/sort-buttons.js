@@ -4,16 +4,12 @@ import { events } from './utils/events'
 import { default as sorter } from './sort'
 
 export function getInSensitive (btn) {
-  var insensitive = getAttribute(btn, 'data-insensitive')
-  if (insensitive === 'false') {
-    return false
-  } else {
-    return true
-  }
+  let insensitive = getAttribute(btn, 'data-insensitive')
+  return insensitive !== 'false';
 }
 export function getNextSortOrder(btn) {
-  var predefinedOrder = getAttribute(btn, 'data-order')
-  if (predefinedOrder == 'asc' || predefinedOrder == 'desc') {
+  let predefinedOrder = getAttribute(btn, 'data-order')
+  if (predefinedOrder === 'asc' || predefinedOrder === 'desc') {
     return predefinedOrder
   } else if (classes(btn).has('desc')) {
     return 'asc'
@@ -24,22 +20,22 @@ export function getNextSortOrder(btn) {
   }
 }
 export function clearSortOrder(els) {
-  for (var i = 0, il = els.length; i < il; i++) {
+  for (let i = 0, il = els.length; i < il; i++) {
     classes(els[i]).remove('asc')
     classes(els[i]).remove('desc')
   }
 }
 export function setSortOrder(els, valueName, order) {
-  for (var i = 0, il = els.length; i < il; i++) {
-    var btn = els[i]
+  for (let i = 0, il = els.length; i < il; i++) {
+    let btn = els[i]
     if (getAttribute(btn, 'data-sort') !== valueName) {
       classes(btn).remove('asc')
       classes(btn).remove('desc')
       continue
     }
-    var predefinedOrder = getAttribute(btn, 'data-order')
-    if (predefinedOrder == 'asc' || predefinedOrder == 'desc') {
-      if (predefinedOrder == order) {
+    let predefinedOrder = getAttribute(btn, 'data-order')
+    if (predefinedOrder === 'asc' || predefinedOrder === 'desc') {
+      if (predefinedOrder === order) {
         classes(btn).add(order)
         classes(btn).remove(order === 'asc' ? 'desc' : 'asc')
       } else {
@@ -55,18 +51,18 @@ export function setSortOrder(els, valueName, order) {
 
 export function addSortListeners(elements, options) {
   options = options || {}
-  var items = options.items
-  var sortFunction = options.sortFunction
-  var alphabet = options.alphabet
-  var before = options.before
-  var after = options.after
+  let items = options.items
+  let sortFunction = options.sortFunction
+  let alphabet = options.alphabet
+  let before = options.before
+  let after = options.after
   events.bind(elements, 'click', function () {
     if (before) before()
-    var target = arguments[0].currentTarget || arguments[0].srcElement || undefined
-    var valueName = getAttribute(target, 'data-sort')
-    var order = getNextSortOrder(target)
-    var insensitive = getInSensitive(target)
-    var options = {
+    let target = arguments[0].currentTarget || arguments[0].srcElement || undefined
+    let valueName = getAttribute(target, 'data-sort')
+    let order = getNextSortOrder(target)
+    let insensitive = getInSensitive(target)
+    let options = {
       sortFunction: sortFunction,
       insensitive: insensitive,
       alphabet: alphabet,
