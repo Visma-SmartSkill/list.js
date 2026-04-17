@@ -1,26 +1,33 @@
-var naturalSort = require('string-natural-compare'),
-  getByClass = require('./utils/get-by-class'),
-  extend = require('./utils/extend'),
-  indexOf = require('./utils/index-of'),
-  events = require('./utils/events'),
-  toString = require('./utils/to-string'),
-  classes = require('./utils/classes'),
-  getAttribute = require('./utils/get-attribute'),
-  toArray = require('./utils/to-array'),
-  templater = require('./templater'),
-  Item = require('./item'),
-  sort = require('./sort'),
-  sortButtons = require('./sort-buttons')
+import { default as naturalSort } from 'string-natural-compare'
+import { default as getByClass } from './utils/get-by-class'
+import { default as extend } from './utils/extend'
+import { default as indexOf } from './utils/index-of'
+import { events } from './utils/events'
+import { default as toString } from './utils/to-string'
+import { default as classes } from './utils/classes'
+import { default as getAttribute } from './utils/get-attribute'
+import { default as toArray } from './utils/to-array'
+import { default as templater } from './templater'
+import { default as Item } from './item'
+import { default as sort } from './sort'
+import { default as sortButtons } from './sort-buttons'
+import { default as vssParse } from './vss-parse'
+import { default as parse } from './parse'
+import { default as search } from './search'
+import { default as filter } from './filter'
+import { default as fuzzySearch } from './fuzzy-search'
+import { default as addAsyncFn } from './add-async'
+import { default as initPaginationFn } from './pagination'
 
-var addSortListeners = sortButtons.addSortListeners
-var clearSortOrder = sortButtons.clearSortOrder
-var setSortOrder = sortButtons.setSortOrder
+let addSortListeners = sortButtons.addSortListeners
+let clearSortOrder = sortButtons.clearSortOrder
+let setSortOrder = sortButtons.setSortOrder
 
-module.exports = function (id, options, values) {
-  var self = this,
+export default function (id, options, values) {
+  let self = this,
     init,
-    addAsync = require('./add-async')(self),
-    initPagination = require('./pagination')(self)
+    addAsync = addAsyncFn(self),
+    initPagination = initPaginationFn(self)
 
   init = {
     start: function () {
@@ -34,6 +41,8 @@ module.exports = function (id, options, values) {
       self.matchingItems = []
       self.searched = false
       self.filtered = false
+      self.escapeRegexChars = true
+      self.rememberLastSearch = false
       self.searchColumns = undefined
       self.searchDelay = 0
       self.handlers = { updated: [] }
@@ -58,16 +67,17 @@ module.exports = function (id, options, values) {
       }
       self.list = getByClass(self.listContainer, self.listClass, true)
 
-      self.parse = require('./parse')(self)
+      self.parse = parse(self)
       self.templater = templater
+      self.parseElement = vssParse
       self.template = self.templater.getTemplate({
         parentEl: self.list,
         valueNames: self.valueNames,
         template: self.item,
       })
-      self.search = require('./search')(self)
-      self.filter = require('./filter')(self)
-      self.fuzzySearch = require('./fuzzy-search')(self, options.fuzzySearch)
+      self.search = search(self)
+      self.filter = filter(self)
+      self.fuzzySearch = fuzzySearch(self, options.fuzzySearch)
 
       this.handlers()
       this.items()
@@ -77,7 +87,7 @@ module.exports = function (id, options, values) {
       self.update()
     },
     handlers: function () {
-      for (var handler in self.handlers) {
+      for (let handler in self.handlers) {
         if (self[handler] && self.handlers[handler]) {
           self.on(handler, self[handler])
         }
@@ -97,20 +107,20 @@ module.exports = function (id, options, values) {
         if (options.pagination[0] === undefined) {
           options.pagination = [options.pagination]
         }
-        for (var i = 0, il = options.pagination.length; i < il; i++) {
+        for (let i = 0, il = options.pagination.length; i < il; i++) {
           initPagination(options.pagination[i])
         }
       }
     },
     sort: function () {
-      var sortButtons = self.utils.getByClass(self.listContainer, self.sortClass)
-      var items = self.items
-      var sortFunction = self.sortFunction
-      var alphabet = self.alphabet
-      var before = function () {
+      let sortButtons = self.utils.getByClass(self.listContainer, self.sortClass)
+      let items = self.items
+      let sortFunction = self.sortFunction
+      let alphabet = self.alphabet
+      let before = function () {
         self.trigger('sortStart')
       }
-      var after = function () {
+      let after = function () {
         self.update()
         self.trigger('sortComplete')
       }
@@ -156,9 +166,15 @@ module.exports = function (id, options, values) {
     self.parse(self.list)
   }
 
+  this.addElement = function(element) {
+    if (element.parentNode === self.list) {
+      self.parseElement(element);
+    }
+  }
+
   this.toJSON = function () {
-    var json = []
-    for (var i = 0, il = self.items.length; i < il; i++) {
+    let json = []
+    for (let i = 0, il = self.items.length; i < il; i++) {
       json.push(self.items[i].values())
     }
     return json
@@ -175,12 +191,12 @@ module.exports = function (id, options, values) {
       addAsync(values.slice(0), callback)
       return
     }
-    var added = []
+    let added = []
     if (values[0] === undefined) {
       values = [values]
     }
-    for (var i = 0, il = values.length; i < il; i++) {
-      var item = new Item(values[i], { template: self.template })
+    for (let i = 0, il = values.length; i < il; i++) {
+      let item = new Item(values[i], { template: self.template })
       self.items.push(item)
       added.push(item)
     }
@@ -200,9 +216,9 @@ module.exports = function (id, options, values) {
    * property "valuename" === value
    */
   this.remove = function (valueName, value) {
-    var found = 0
-    for (var i = 0, il = self.items.length; i < il; i++) {
-      if (self.items[i].values()[valueName] == value) {
+    let found = 0
+    for (let i = 0, il = self.items.length; i < il; i++) {
+      if (self.items[i].values()[valueName] === value) {
         self.templater.remove(self.items[i].elm, self.list)
         self.items.splice(i, 1)
         il--
@@ -218,10 +234,10 @@ module.exports = function (id, options, values) {
    * property "valueName" === value
    */
   this.get = function (valueName, value) {
-    var matchedItems = []
-    for (var i = 0, il = self.items.length; i < il; i++) {
-      var item = self.items[i]
-      if (item.values()[valueName] == value) {
+    let matchedItems = []
+    for (let i = 0, il = self.items.length; i < il; i++) {
+      let item = self.items[i]
+      if (item.values()[valueName] === value) {
         matchedItems.push(item)
       }
     }
@@ -250,8 +266,8 @@ module.exports = function (id, options, values) {
   }
 
   this.off = function (event, callback) {
-    var e = self.handlers[event]
-    var index = indexOf(e, callback)
+    let e = self.handlers[event]
+    let index = indexOf(e, callback)
     if (index > -1) {
       e.splice(index, 1)
     }
@@ -259,7 +275,7 @@ module.exports = function (id, options, values) {
   }
 
   this.trigger = function (event) {
-    var i = self.handlers[event].length
+    let i = self.handlers[event].length
     while (i--) {
       self.handlers[event][i](self)
     }
@@ -268,7 +284,7 @@ module.exports = function (id, options, values) {
 
   this.reset = {
     filter: function () {
-      var is = self.items,
+      let is = self.items,
         il = is.length
       while (il--) {
         is[il].filtered = false
@@ -276,7 +292,7 @@ module.exports = function (id, options, values) {
       return self
     },
     search: function () {
-      var is = self.items,
+      let is = self.items,
         il = is.length
       while (il--) {
         is[il].found = false
@@ -286,13 +302,13 @@ module.exports = function (id, options, values) {
   }
 
   this.update = function () {
-    var is = self.items,
+    let is = self.items,
       il = is.length
 
     self.visibleItems = []
     self.matchingItems = []
     self.templater.clear(self.list)
-    for (var i = 0; i < il; i++) {
+    for (let i = 0; i < il; i++) {
       if (is[i].matching(self) && self.matchingItems.length + 1 >= self.i && self.visibleItems.length < self.page) {
         if (!is[i].elm) {
           is[i].elm = templater.create(is[i].values(), self.template)

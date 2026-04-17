@@ -12,7 +12,7 @@
  * @api public
  */
 
-var getElementsByClassName = function (container, className, single) {
+let getElementsByClassName = function (container, className, single) {
   if (single) {
     return container.getElementsByClassName(className)[0]
   } else {
@@ -20,7 +20,7 @@ var getElementsByClassName = function (container, className, single) {
   }
 }
 
-var querySelector = function (container, className, single) {
+let querySelector = function (container, className, single) {
   className = '.' + className
   if (single) {
     return container.querySelector(className)
@@ -29,14 +29,14 @@ var querySelector = function (container, className, single) {
   }
 }
 
-var polyfill = function (container, className, single) {
-  var classElements = [],
+let polyfill = function (container, className, single) {
+  let classElements = [],
     tag = '*'
 
-  var els = container.getElementsByTagName(tag)
-  var elsLen = els.length
-  var pattern = new RegExp('(^|\\s)' + className + '(\\s|$)')
-  for (var i = 0, j = 0; i < elsLen; i++) {
+  let els = container.getElementsByTagName(tag)
+  let elsLen = els.length
+  let pattern = new RegExp('(^|\\s)' + className + '(\\s|$)')
+  for (let i = 0, j = 0; i < elsLen; i++) {
     if (pattern.test(els[i].className)) {
       if (single) {
         return els[i]
@@ -49,7 +49,7 @@ var polyfill = function (container, className, single) {
   return classElements
 }
 
-module.exports = (function () {
+export default (function () {
   return function (container, className, single, options) {
     options = options || {}
     if ((options.test && options.getElementsByClassName) || (!options.test && document.getElementsByClassName)) {

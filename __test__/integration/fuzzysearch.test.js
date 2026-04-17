@@ -42,25 +42,21 @@ describe('Fuzzy Search', function () {
     expect(list.matchingItems.length).toBe(4)
   })
 
-  describe('Search field', function () {
-    it('should trigger searchStart', () => {
-      return new Promise((resolve) => {
-        list.on('searchStart', function () {
-          resolve()
-        })
-        const input = screen.getByRole('textbox')
-        userEvent.type(input, 'angelica')
-      })
+  describe('Search field', async function () {
+    it('should trigger searchStart', async () => {
+      let triggered = false
+      list.on('searchStart', function () { triggered = true } )
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'angelica')
+      expect(triggered).toBe(true)
     })
 
-    it('should trigger searchComplete', () => {
-      return new Promise((resolve) => {
-        list.on('searchComplete', function () {
-          resolve()
-        })
-        const input = screen.getByRole('textbox')
-        userEvent.type(input, 'angelica')
-      })
+    it('should trigger searchComplete', async () => {
+      let triggered = false
+      list.on('searchComplete', function () { triggered = true } )
+      const input = screen.getByRole('textbox')
+      await userEvent.type(input, 'angelica')
+      expect(triggered).toBe(true)
     })
   })
 })
