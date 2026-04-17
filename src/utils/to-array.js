@@ -9,7 +9,7 @@
  * @api public
  */
 
-module.exports = function toArray(collection) {
+export default function toArray(collection) {
   if (typeof collection === 'undefined') return []
   if (collection === null) return [null]
   if (collection === window) return [window]

@@ -1,5 +1,6 @@
-var Item = require('./item')
-module.exports = function (list) {
+import { default as Item } from './item'
+
+export default function (list) {
     var parse = function (element, valueNames) {
         list.items.push(new Item(valueNames, element))
     }

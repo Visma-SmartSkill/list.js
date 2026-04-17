@@ -49,7 +49,7 @@ var polyfill = function (container, className, single) {
   return classElements
 }
 
-module.exports = (function () {
+export default (function () {
   return function (container, className, single, options) {
     options = options || {}
     if ((options.test && options.getElementsByClassName) || (!options.test && document.getElementsByClassName)) {

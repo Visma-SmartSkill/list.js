@@ -1,4 +1,4 @@
-module.exports = function (list) {
+export default function (list) {
   var addAsync = function (values, callback, items) {
     var valuesToAdd = values.splice(0, 50)
     items = items || []

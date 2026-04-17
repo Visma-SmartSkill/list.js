@@ -1,8 +1,8 @@
-var classes = require('./utils/classes'),
-  events = require('./utils/events'),
-  List = require('./index')
+import { default as classes } from './utils/classes'
+import { events } from './utils/events'
+import { default as List } from './index'
 
-module.exports = function (list) {
+export default function (list) {
   var isHidden = false
 
   var refresh = function (pagingList, options) {
