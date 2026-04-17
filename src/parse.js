@@ -1,6 +1,6 @@
-var Item = require('./item')
+import { default as Item } from './item'
 
-module.exports = function (list) {
+export default function (list) {
   var getChildren = function (parent) {
     var nodes = parent.childNodes,
       items = []

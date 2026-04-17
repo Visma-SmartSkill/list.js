@@ -1,4 +1,4 @@
-module.exports = function (list) {
+export default function (list) {
   // Add handlers
   list.handlers.filterStart = list.handlers.filterStart || []
   list.handlers.filterComplete = list.handlers.filterComplete || []

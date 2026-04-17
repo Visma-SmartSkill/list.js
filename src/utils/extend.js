@@ -2,7 +2,7 @@
  * Source: https://github.com/segmentio/extend
  */
 
-module.exports = function extend(object) {
+export default function extend(object) {
   // Takes an unlimited number of extenders.
   var args = Array.prototype.slice.call(arguments, 1)
 

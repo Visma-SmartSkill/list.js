@@ -1,27 +1,33 @@
-var naturalSort = require('string-natural-compare'),
-  getByClass = require('./utils/get-by-class'),
-  extend = require('./utils/extend'),
-  indexOf = require('./utils/index-of'),
-  events = require('./utils/events'),
-  toString = require('./utils/to-string'),
-  classes = require('./utils/classes'),
-  getAttribute = require('./utils/get-attribute'),
-  toArray = require('./utils/to-array'),
-  templater = require('./templater'),
-  Item = require('./item'),
-  sort = require('./sort'),
-  sortButtons = require('./sort-buttons'),
-  vssParse = require('./vss-parse')
+import { default as naturalSort } from 'string-natural-compare'
+import { default as getByClass } from './utils/get-by-class'
+import { default as extend } from './utils/extend'
+import { default as indexOf } from './utils/index-of'
+import { events } from './utils/events'
+import { default as toString } from './utils/to-string'
+import { default as classes } from './utils/classes'
+import { default as getAttribute } from './utils/get-attribute'
+import { default as toArray } from './utils/to-array'
+import { default as templater } from './templater'
+import { default as Item } from './item'
+import { default as sort } from './sort'
+import { default as sortButtons } from './sort-buttons'
+import { default as vssParse } from './vss-parse'
+import { default as parse } from './parse'
+import { default as search } from './search'
+import { default as filter } from './filter'
+import { default as fuzzySearch } from './fuzzy-search'
+import { default as addAsyncFn } from './add-async'
+import { default as initPaginationFn } from './pagination'
 
 var addSortListeners = sortButtons.addSortListeners
 var clearSortOrder = sortButtons.clearSortOrder
 var setSortOrder = sortButtons.setSortOrder
 
-module.exports = function (id, options, values) {
+export default function (id, options, values) {
   var self = this,
     init,
-    addAsync = require('./add-async')(self),
-    initPagination = require('./pagination')(self)
+    addAsync = addAsyncFn(self),
+    initPagination = initPaginationFn(self)
 
   init = {
     start: function () {
@@ -61,7 +67,7 @@ module.exports = function (id, options, values) {
       }
       self.list = getByClass(self.listContainer, self.listClass, true)
 
-      self.parse = require('./parse')(self)
+      self.parse = parse(self)
       self.templater = templater
       self.parseElement = vssParse
       self.template = self.templater.getTemplate({
@@ -69,9 +75,9 @@ module.exports = function (id, options, values) {
         valueNames: self.valueNames,
         template: self.item,
       })
-      self.search = require('./search')(self)
-      self.filter = require('./filter')(self)
-      self.fuzzySearch = require('./fuzzy-search')(self, options.fuzzySearch)
+      self.search = search(self)
+      self.filter = filter(self)
+      self.fuzzySearch = fuzzySearch(self, options.fuzzySearch)
 
       this.handlers()
       this.items()

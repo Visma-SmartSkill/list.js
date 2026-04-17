@@ -1,6 +1,6 @@
-var naturalSort = require('string-natural-compare')
+import { default as naturalSort } from 'string-natural-compare'
 
-module.exports = function (items, column, options) {
+export default function (items, column, options) {
   options = options || {}
   var sortFunction = options.sortFunction || undefined
   var order = options.order || 'asc'
